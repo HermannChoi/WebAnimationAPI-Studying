@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Animation API</title>
+    <style>
+      body {
+        background-color: rgb(57, 57, 57);
+      }
+      .box {
+        width: 100px;
+        height: 100px;
+        background-color: dodgerblue;
+        border-radius: 10px;
+      }
+      .state {
+        width: 300px;
+        height: 20px;
+        border-radius: 10px;
+        background-color: gray;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box"></div>
+    <div class="state"></div>
+    <div class="player-buttons" data-function="">
+      <button class="btn" data-function="play">
+        <span class="btn-label">PLAY</span>
+      </button>
+      <button class="btn" data-function="pause">
+        <span class="btn-label">PAUSE</span>
+      </button>
+      <button class="btn" data-function="faster">
+        <span class="btn-label">X2</span>
+      </button>
+      <button class="btn" data-function="slower">
+        <span class="btn-label">/2</span>
+      </button>
+    </div>
+    <script>
+      const box = document.querySelector(".box");
+      const playerDisplay = document.querySelector(".state");
+
+      const keyframes = [
+        { transform: "translate(0)", opacity: 0.3 },
+        { transform: "translate(675px)", opacity: 1, offset: 0.5 },
+        { transform: "translate(1350px)", opacity: 0.3 },
+      ];
+      const options = {
+        duration: 3000,
+        easing: "ease-in-out",
+        iterations: Infinity,
+        direction: "alternate",
+      };
+      const animation = box.animate(keyframes, options);
+
+      const playerButtons = document.querySelector(".player-buttons");
+      playerButtons.addEventListener("click", (event) => {
+        const target = event.target.closest(".btn");
+        handlePlayer(target.dataset.function);
+      });
+
+      function handlePlayer(functionName) {
+        switch (functionName) {
+          case "play":
+            animation.play();
+            break;
+          case "pause":
+            animation.pause();
+            break;
+          case "faster":
+            animation.playbackRate *= 2;
+            break;
+          case "slower":
+            animation.playbackRate /= 2;
+            break;
+          default:
+        }
+        playerDisplay.innerHTML = animation.playState;
+      }
+    </script>
+  </body>
+</html>
