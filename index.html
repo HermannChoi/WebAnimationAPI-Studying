@@ -11,7 +11,7 @@
       .box {
         width: 100px;
         height: 100px;
-        background-color: dodgerblue;
+        background-color: gold;
         border-radius: 10px;
       }
       .state {
@@ -44,9 +44,16 @@
       const playerDisplay = document.querySelector(".state");
 
       const keyframes = [
-        { transform: "translate(0)", opacity: 0.3 },
-        { transform: "translate(675px)", opacity: 1, offset: 0.5 },
-        { transform: "translate(1350px)", opacity: 0.3 },
+        { transform: "translate(0)" },
+        {
+          transform: "translate(675px)",
+          backgroundColor: "white",
+          offset: 0.5,
+        },
+        {
+          transform: "translate(1350px)",
+          backgroundColor: "pink",
+        },
       ];
       const options = {
         duration: 3000,
@@ -61,7 +68,6 @@
         const target = event.target.closest(".btn");
         handlePlayer(target.dataset.function);
       });
-
       function handlePlayer(functionName) {
         switch (functionName) {
           case "play":

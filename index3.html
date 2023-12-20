@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        background-color: black;
+      }
+      .bar_container {
+        width: 100vw;
+        /* height: 100vh; */
+        display: flex;
+        /* justify-content: space-around; */
+        /* align-items: center; */
+        gap: 20px;
+      }
+      .bar {
+        width: 10px;
+        height: 300px;
+        background-color: rgb(10, 10, 10);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bar_container"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web-animations/2.3.2/web-animations-next.min.js"></script>
+    <script>
+      const barContainer = document.querySelector(".bar_container");
+      const bars = [];
+      let bar;
+
+      for (let i = 0; i < 50; i++) {
+        bar = document.createElement("div");
+        bar.classList.add("bar");
+        barContainer.appendChild(bar);
+        bars.push(bar);
+      }
+
+      const keyframes = [
+        { transform: "scaleY(0.2)" },
+        { transform: "scaleY(2)", backgroundColor: "gray" },
+      ];
+
+      const options = {
+        duration: 500,
+        // iterations: Infinity,
+        direction: "alternate",
+        fill: "both",
+        easing: "ease-in-out",
+      };
+
+      const effects = [];
+      bars.forEach((bar, index) => {
+        // const newOptions = { ...options, delay: index * 200 };
+        const effect = new KeyframeEffect(bar, keyframes, options);
+        effects.push(effect);
+      });
+
+      const sequenceEffect = new SequenceEffect(effects);
+      const animation = document.timeline.play(sequenceEffect);
+
+      // bars.forEach((bar, index) => {
+      //   bar.animate(keyframes, { ...options, delay: index * 200 });
+      // });
+    </script>
+  </body>
+</html>
